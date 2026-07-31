@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ImageDrop } from "@/components/ImageDrop";
+import { DownloadOptions } from "@/components/DownloadOptions";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
