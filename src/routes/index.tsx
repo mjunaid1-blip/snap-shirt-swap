@@ -186,7 +186,11 @@ function Index() {
           <button
             onClick={tryOn}
             disabled={!ready || loading}
-            className="relative overflow-hidden rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-highlight hover:shadow-[0_0_28px_-8px_var(--color-primary)] disabled:cursor-not-allowed disabled:opacity-40"
+            className={`relative overflow-hidden rounded-full px-8 py-3.5 text-sm font-semibold transition-all ${
+              ready && !loading
+                ? "bg-primary text-primary-foreground hover:bg-highlight hover:shadow-[0_0_28px_-8px_var(--color-primary)]"
+                : "border border-primary/40 bg-primary/5 text-primary/70 cursor-not-allowed"
+            }`}
           >
             <span className="relative z-10 flex items-center gap-2">
               <SparkleIcon />
