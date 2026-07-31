@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ImageDrop } from "@/components/ImageDrop";
 import { DownloadOptions } from "@/components/DownloadOptions";
+import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 
 
 export const Route = createFileRoute("/")({
