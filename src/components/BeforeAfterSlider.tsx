@@ -108,7 +108,7 @@ export function BeforeAfterSlider({
       >
         <div className="flex h-full w-px bg-white/60" />
         <div
-          className="absolute flex items-center justify-center rounded-full border border-white/40 bg-black/50 shadow-lg backdrop-blur-sm"
+          className="absolute flex items-center justify-center rounded-full border border-white/40 bg-black/60 text-white shadow-[0_0_20px_-4px_rgba(0,0,0,0.5)] backdrop-blur-sm transition-transform"
           style={{ width: handleSize, height: handleSize }}
         >
           <svg
@@ -120,7 +120,6 @@ export function BeforeAfterSlider({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-white"
           >
             <path d="M9 18l6-6-6-6" />
             <path d="M15 18l-6-6 6-6" />
@@ -129,10 +128,10 @@ export function BeforeAfterSlider({
       </div>
 
       {/* Labels */}
-      <span className="pointer-events-none absolute top-3 left-3 z-20 rounded-full bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+      <span className="pointer-events-none absolute top-3 left-3 z-20 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
         Before
       </span>
-      <span className="pointer-events-none absolute top-3 right-3 z-20 rounded-full bg-primary/80 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+      <span className="pointer-events-none absolute top-3 right-3 z-20 rounded-full bg-primary/90 px-3 py-1 text-xs font-semibold text-black backdrop-blur-sm">
         After
       </span>
     </div>
