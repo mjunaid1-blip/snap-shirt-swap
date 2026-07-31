@@ -178,11 +178,11 @@
 
 @utility card-lift {
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
 
-@utility card-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -12px oklch(0.000 0.000 0.0 / 0.5);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px oklch(0.000 0.000 0.0 / 0.5);
+  }
 }
 
 @utility gold-glow {
