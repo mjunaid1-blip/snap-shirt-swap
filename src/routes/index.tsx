@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ImageDrop } from "@/components/ImageDrop";
 import { DownloadOptions } from "@/components/DownloadOptions";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
+import { ThreeDView } from "@/components/ThreeDView";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -75,6 +76,7 @@ function Index() {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [viewMode, setViewMode] = useState<"compare" | "3d">("compare");
 
   async function tryOn() {
     if (!person || !garment || loading) return;
@@ -147,12 +149,28 @@ function Index() {
           <div className="flex items-baseline justify-between">
             <span className="text-sm font-medium tracking-wide text-foreground/90">3. Preview</span>
             {result && (
-              <span className="text-xs text-primary">Ready</span>
+              <div className="flex items-center gap-1 rounded-full border border-border bg-card/60 p-0.5">
+                {(["compare", "3d"] as const).map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => setViewMode(m)}
+                    className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                      viewMode === m
+                        ? "bg-primary text-primary-foreground font-semibold"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {m === "compare" ? "Compare" : "3D view"}
+                  </button>
+                ))}
+              </div>
             )}
           </div>
           <div className="relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-card card-lift">
             {loading ? (
               <Loader />
+            ) : result && viewMode === "3d" ? (
+              <ThreeDView src={result} alt="Preview of you wearing the shirt" />
             ) : result && person ? (
               <BeforeAfterSlider
                 before={person}
@@ -166,6 +184,11 @@ function Index() {
               <EmptyPreview />
             )}
           </div>
+          {result && viewMode === "3d" && (
+            <p className="text-center text-xs text-muted-foreground">
+              Drag to rotate · use the slider to zoom
+            </p>
+          )}
           {result && <DownloadOptions src={result} />}
         </div>
       </section>
