@@ -62,7 +62,7 @@ function EmptyPreview() {
         <SparkleIcon className="h-7 w-7" />
       </div>
       <p className="text-sm leading-relaxed text-muted-foreground">
-        Your try-on preview will appear here once both photos are uploaded.
+        Upload your photo and the shirt, then tap <span className="font-medium text-foreground">Try it on</span> to reveal your preview here.
       </p>
     </div>
   );
