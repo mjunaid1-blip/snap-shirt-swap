@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ImageDrop } from "@/components/ImageDrop";
 import { DownloadOptions } from "@/components/DownloadOptions";
+import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 
 
 export const Route = createFileRoute("/")({
@@ -89,7 +90,14 @@ function Index() {
         <div className="space-y-2">
           <span className="text-sm font-medium">3. Preview</span>
           <div className="flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-card">
-            {result ? (
+            {result && person ? (
+              <BeforeAfterSlider
+                before={person}
+                after={result}
+                beforeAlt="Your original photo"
+                afterAlt="Preview of you wearing the shirt"
+              />
+            ) : result ? (
               <img src={result} alt="Preview of you wearing the shirt" className="h-full w-full object-cover" />
             ) : (
               <span className="px-6 text-center text-sm text-muted-foreground">
@@ -98,7 +106,6 @@ function Index() {
             )}
           </div>
           {result && <DownloadOptions src={result} />}
-
         </div>
       </section>
 
