@@ -35,16 +35,21 @@ export function BeforeAfterSlider({
   };
 
   const onTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    if (!touch) return;
     setIsDragging(true);
-    updatePosition(e.touches[0].clientX);
+    updatePosition(touch.clientX);
   };
 
   useEffect(() => {
     if (!isDragging) return;
 
     const handleMouseMove = (e: MouseEvent) => updatePosition(e.clientX);
-    const handleTouchMove = (e: TouchEvent) =>
-      updatePosition(e.touches[0].clientX);
+    const handleTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+      updatePosition(touch.clientX);
+    };
     const stop = () => setIsDragging(false);
 
     window.addEventListener("mousemove", handleMouseMove);
