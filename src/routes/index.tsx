@@ -4,7 +4,6 @@ import { ImageDrop } from "@/components/ImageDrop";
 import { DownloadOptions } from "@/components/DownloadOptions";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -25,6 +24,49 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
+
+function SparkleIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .962L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z" />
+    </svg>
+  );
+}
+
+function Loader() {
+  return (
+    <div className="flex flex-col items-center gap-4 text-center">
+      <div className="relative h-12 w-12">
+        <div className="absolute inset-0 rounded-full border-2 border-primary/20" />
+        <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-primary animate-spin" />
+      </div>
+      <p className="text-sm text-muted-foreground">Styling your fit…</p>
+    </div>
+  );
+}
+
+function EmptyPreview() {
+  return (
+    <div className="flex flex-col items-center gap-4 text-center px-6">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+        <SparkleIcon className="h-7 w-7" />
+      </div>
+      <p className="text-sm leading-relaxed text-muted-foreground">
+        Upload your photo and the shirt, then tap <span className="font-medium text-foreground">Try it on</span> to reveal your preview here.
+      </p>
+    </div>
+  );
+}
 
 function Index() {
   const [person, setPerson] = useState<string | null>(null);
@@ -60,20 +102,34 @@ function Index() {
     }
   }
 
+  const ready = Boolean(person && garment);
+
   return (
-    <main className="mx-auto max-w-5xl px-5 py-14 md:py-20">
-      <header className="max-w-2xl">
-        <p className="text-xs font-medium uppercase tracking-[0.25em] text-primary">FitRoom</p>
-        <h1 className="mt-4 text-4xl leading-tight md:text-6xl">
-          See the shirt on <em className="not-italic text-primary">you</em>, before you buy it.
+    <main className="relative mx-auto max-w-6xl px-5 py-14 md:py-24">
+      {/* Hero */}
+      <header className="max-w-3xl fade-up">
+        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">FitRoom</p>
+        <h1 className="mt-6 text-5xl leading-[1.05] md:text-7xl lg:text-8xl">
+          See the shirt on <span className="text-primary text-glow">you</span>, before you buy it.
         </h1>
-        <p className="mt-4 text-base text-muted-foreground md:text-lg">
+        <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
           Drop in a full-body photo and a picture of any shirt. Our AI fits the garment to your
-          body, pose and lighting — and shows the preview.
+          body, pose, and lighting — then reveals the preview.
         </p>
+        <div className="mt-8 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            Private & secure
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            Photos are never stored
+          </span>
+        </div>
       </header>
 
-      <section className="mt-12 grid gap-6 md:grid-cols-3">
+      {/* Three-step grid */}
+      <section className="mt-16 grid gap-6 md:grid-cols-3 fade-up" style={{ animationDelay: "0.1s" }}>
         <ImageDrop
           label="1. Your photo"
           hint="Click or drop a clear, front-facing full-body photo"
@@ -87,10 +143,17 @@ function Index() {
           onChange={setGarment}
         />
 
-        <div className="space-y-2">
-          <span className="text-sm font-medium">3. Preview</span>
-          <div className="flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-card">
-            {result && person ? (
+        <div className="space-y-3">
+          <div className="flex items-baseline justify-between">
+            <span className="text-sm font-medium tracking-wide text-foreground/90">3. Preview</span>
+            {result && (
+              <span className="text-xs text-primary">Ready</span>
+            )}
+          </div>
+          <div className="relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-card card-lift">
+            {loading ? (
+              <Loader />
+            ) : result && person ? (
               <BeforeAfterSlider
                 before={person}
                 after={result}
@@ -100,17 +163,16 @@ function Index() {
             ) : result ? (
               <img src={result} alt="Preview of you wearing the shirt" className="h-full w-full object-cover" />
             ) : (
-              <span className="px-6 text-center text-sm text-muted-foreground">
-                {loading ? "Styling your fit…" : "Your try-on will appear here"}
-              </span>
+              <EmptyPreview />
             )}
           </div>
           {result && <DownloadOptions src={result} />}
         </div>
       </section>
 
-      <section className="mt-8 rounded-2xl border border-border bg-card p-5">
-        <label htmlFor="notes" className="text-sm font-medium">
+      {/* Controls */}
+      <section className="mt-10 rounded-2xl border border-border bg-card/60 p-6 backdrop-blur-sm fade-up" style={{ animationDelay: "0.2s" }}>
+        <label htmlFor="notes" className="text-sm font-medium tracking-wide text-foreground/90">
           Optional styling notes
         </label>
         <input
@@ -118,22 +180,38 @@ function Index() {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="e.g. tuck it in, roll the sleeves, keep the background"
-          className="mt-3 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring"
+          className="mt-4 w-full rounded-xl border border-input bg-background px-4 py-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-ring"
         />
-        <div className="mt-4 flex flex-wrap items-center gap-4">
+        <div className="mt-5 flex flex-wrap items-center gap-5">
           <button
             onClick={tryOn}
-            disabled={!person || !garment || loading}
-            className="rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            disabled={!ready || loading}
+            className={`relative overflow-hidden rounded-full px-8 py-3.5 text-sm font-semibold transition-all ${
+              ready && !loading
+                ? "bg-primary text-primary-foreground hover:bg-highlight hover:shadow-[0_0_28px_-8px_var(--color-primary)]"
+                : "border border-primary/40 bg-primary/5 text-primary/70 cursor-not-allowed"
+            }`}
           >
-            {loading ? "Generating…" : "Try it on"}
+            <span className="relative z-10 flex items-center gap-2">
+              <SparkleIcon />
+              {loading ? "Generating…" : "Try it on"}
+            </span>
           </button>
           <p className="text-xs text-muted-foreground">
-            Photos are used only to generate your preview.
+            Add both photos above, then tap the button to generate your preview.
           </p>
         </div>
-        {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
+        {error && (
+          <div className="mt-5 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3">
+            <p className="text-sm text-destructive">{error}</p>
+          </div>
+        )}
       </section>
+
+      {/* Footer note */}
+      <p className="mt-16 text-center text-xs text-muted-foreground/60 fade-up" style={{ animationDelay: "0.3s" }}>
+        Results are AI-generated and may vary. Use them as a styling guide, not a guarantee of fit.
+      </p>
     </main>
   );
 }
