@@ -95,15 +95,8 @@ function Index() {
               </span>
             )}
           </div>
-          {result && (
-            <a
-              href={result}
-              download="fitroom-tryon.png"
-              className="block text-center text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
-            >
-              Download preview
-            </a>
-          )}
+          {result && <DownloadOptions src={result} />}
+
         </div>
       </section>
 
