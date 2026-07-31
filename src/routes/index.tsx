@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ImageDrop } from "@/components/ImageDrop";
 import { DownloadOptions } from "@/components/DownloadOptions";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
+import { ThreeDView } from "@/components/ThreeDView";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -75,6 +76,7 @@ function Index() {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [viewMode, setViewMode] = useState<"compare" | "3d">("compare");
 
   async function tryOn() {
     if (!person || !garment || loading) return;
