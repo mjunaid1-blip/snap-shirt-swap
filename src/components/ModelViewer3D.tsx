@@ -157,10 +157,17 @@ export function ModelViewer3D({ src, alt }: { src: string; alt: string }) {
           </div>
           <p className="text-sm text-muted-foreground">Building your 3D model…</p>
           <p className="text-xs text-primary">
-            {ready} / {ANGLES.length} angles rendered
+            {ready} / {FAST_ANGLES.length} angles rendered
           </p>
         </div>
       )}
+
+      {refining && !building && (
+        <span className="absolute right-3 top-3 z-10 rounded-full border border-primary/40 bg-black/50 px-2.5 py-1 text-[10px] text-primary backdrop-blur-sm">
+          Smoothing rotation…
+        </span>
+      )}
+
 
       {error && !building && (
         <p className="absolute inset-x-0 top-0 z-10 bg-destructive/15 px-3 py-2 text-center text-xs text-destructive">
