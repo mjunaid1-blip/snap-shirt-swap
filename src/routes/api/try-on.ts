@@ -24,11 +24,11 @@ export const Route = createFileRoute("/api/try-on")({
 
         const prompt = [
           "The first image is a photo of a person. The second image is a t-shirt.",
-          "A full-body 3D video game character model of the person in the first image, reconstructed as a stylized 3D avatar.",
-          "The character is wearing the exact t-shirt from the second image, accurately transferring its design, color, logos and graphics onto the 3D garment mesh.",
-          "High-detail 3D character render, Unreal Engine 5 aesthetic, Blender 3D style, clean studio lighting,",
-          "neutral T-pose or standard game idle pose, realistic fabric physics, crisp textures, smooth geometry, 8k resolution,",
-          "cinematic 3D game asset turn-around. Keep the person's likeness, hair, skin tone and body proportions recognizable.",
+          "Generate a photorealistic full-body image of the same person from the first image wearing the exact t-shirt from the second image.",
+          "Match the person's face, hair, skin tone, body shape and proportions from the first image exactly.",
+          "Match the t-shirt's exact design, colour, logos, graphics, fabric texture and fit from the second image.",
+          "Natural standing pose, full body head-to-toe, clean studio lighting, neutral seamless background,",
+          "no text, no watermark, high resolution, realistic skin and fabric detail.",
           notes ? `Extra instructions: ${notes}` : "",
         ]
           .filter(Boolean)
