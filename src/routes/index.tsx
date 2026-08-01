@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ImageDrop } from "@/components/ImageDrop";
 import { DownloadOptions } from "@/components/DownloadOptions";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
-import { ThreeDView } from "@/components/ThreeDView";
+import { ModelViewer3D } from "@/components/ModelViewer3D";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -160,7 +160,7 @@ function Index() {
                         : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
-                    {m === "compare" ? "Compare" : "3D view"}
+                    {m === "compare" ? "Compare" : "3D model"}
                   </button>
                 ))}
               </div>
@@ -170,7 +170,7 @@ function Index() {
             {loading ? (
               <Loader />
             ) : result && viewMode === "3d" ? (
-              <ThreeDView src={result} alt="Preview of you wearing the shirt" />
+              <ModelViewer3D src={result} alt="3D model of you wearing the shirt" />
             ) : result && person ? (
               <BeforeAfterSlider
                 before={person}
@@ -186,7 +186,7 @@ function Index() {
           </div>
           {result && viewMode === "3d" && (
             <p className="text-center text-xs text-muted-foreground">
-              Drag to rotate · use the slider to zoom
+              Drag left/right to spin the model 360° · sliders rotate and zoom
             </p>
           )}
           {result && <DownloadOptions src={result} />}
