@@ -106,13 +106,20 @@ export function ModelViewer3D({ src, alt }: { src: string; alt: string }) {
     };
   }, []);
 
-  const ready = ANGLES.filter((a) => frames[a]).length;
+  const ready = FAST_ANGLES.filter((a) => frames[a]).length;
   const currentAngle = ANGLES[index] ?? 0;
   // Fall back to the nearest rendered frame while others are still generating.
   const shown =
     frames[currentAngle] ??
-    ANGLES.map((a) => frames[a]).find(Boolean) ??
+    [...ANGLES]
+      .sort((a, b) => {
+        const d = (x: number) => Math.min(Math.abs(x - currentAngle), 360 - Math.abs(x - currentAngle));
+        return d(a) - d(b);
+      })
+      .map((a) => frames[a])
+      .find(Boolean) ??
     src;
+
 
   return (
     <div className="relative h-full w-full">
