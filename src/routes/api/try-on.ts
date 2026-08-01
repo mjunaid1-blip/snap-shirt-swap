@@ -23,10 +23,12 @@ export const Route = createFileRoute("/api/try-on")({
         if (!person || !garment) return new Response("Missing images", { status: 400 });
 
         const prompt = [
-          "Virtual clothing try-on. The first image is a photo of a person. The second image is a garment.",
-          "Generate a single photorealistic image of the SAME person, same face, same body shape, same pose, same background and lighting,",
-          "now wearing the garment from the second image. Match the garment's exact color, pattern, print, texture and cut.",
-          "Fit it naturally to the body with realistic folds, shadows and proportions. Do not alter the person's identity.",
+          "The first image is a photo of a person. The second image is a t-shirt.",
+          "A full-body 3D video game character model of the person in the first image, reconstructed as a stylized 3D avatar.",
+          "The character is wearing the exact t-shirt from the second image, accurately transferring its design, color, logos and graphics onto the 3D garment mesh.",
+          "High-detail 3D character render, Unreal Engine 5 aesthetic, Blender 3D style, clean studio lighting,",
+          "neutral T-pose or standard game idle pose, realistic fabric physics, crisp textures, smooth geometry, 8k resolution,",
+          "cinematic 3D game asset turn-around. Keep the person's likeness, hair, skin tone and body proportions recognizable.",
           notes ? `Extra instructions: ${notes}` : "",
         ]
           .filter(Boolean)

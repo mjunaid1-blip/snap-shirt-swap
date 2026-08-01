@@ -35,12 +35,13 @@ export const Route = createFileRoute("/api/turnaround")({
           return Response.json({ error: "Missing image or angle" }, { status: 400 });
 
         const prompt = [
-          "This image shows a person wearing a shirt. Render the exact same person, in the exact same shirt,",
-          "as one frame of a 360-degree turntable of a full-body 3D character model.",
+          "This image shows a full-body 3D video game character model of a person wearing a t-shirt.",
+          "Render the exact same 3D character, in the exact same t-shirt, as one frame of a cinematic 3D game asset turn-around.",
           `Camera angle: ${describe(angle)}.`,
-          "Keep identity, hair, body proportions, skin tone, garment colour, pattern and fit perfectly consistent with the source.",
-          "Full body head-to-toe, centred, same scale and eye level in every frame, neutral A-pose, even studio lighting,",
-          "plain seamless dark charcoal studio backdrop, no text, no watermark. Photorealistic.",
+          "Keep identity, hair, body proportions, skin tone, garment colour, logos, graphics and fit perfectly consistent with the source.",
+          "High-detail 3D character render, Unreal Engine 5 aesthetic, Blender 3D style, realistic fabric physics, crisp textures, smooth geometry, 8k resolution.",
+          "Full body head-to-toe, centred, same scale and eye level in every frame, neutral T-pose or standard game idle pose,",
+          "clean studio lighting, plain seamless dark charcoal studio backdrop, no text, no watermark.",
         ].join(" ");
 
         const upstream = await fetch("https://ai.gateway.lovable.dev/v1/images/generations", {
