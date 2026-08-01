@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiTryOnRouteImport } from './routes/api/try-on'
+import { Route as ApiTurnaroundRouteImport } from './routes/api/turnaround'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const ApiTryOnRoute = ApiTryOnRouteImport.update({
   path: '/api/try-on',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiTurnaroundRoute = ApiTurnaroundRouteImport.update({
+  id: '/api/turnaround',
+  path: '/api/turnaround',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/try-on': typeof ApiTryOnRoute
+  '/api/turnaround': typeof ApiTurnaroundRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/try-on': typeof ApiTryOnRoute
+  '/api/turnaround': typeof ApiTurnaroundRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/try-on': typeof ApiTryOnRoute
+  '/api/turnaround': typeof ApiTurnaroundRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/try-on'
+  fullPaths: '/' | '/api/try-on' | '/api/turnaround'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/try-on'
-  id: '__root__' | '/' | '/api/try-on'
+  to: '/' | '/api/try-on' | '/api/turnaround'
+  id: '__root__' | '/' | '/api/try-on' | '/api/turnaround'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiTryOnRoute: typeof ApiTryOnRoute
+  ApiTurnaroundRoute: typeof ApiTurnaroundRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiTryOnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/turnaround': {
+      id: '/api/turnaround'
+      path: '/api/turnaround'
+      fullPath: '/api/turnaround'
+      preLoaderRoute: typeof ApiTurnaroundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiTryOnRoute: ApiTryOnRoute,
+  ApiTurnaroundRoute: ApiTurnaroundRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
